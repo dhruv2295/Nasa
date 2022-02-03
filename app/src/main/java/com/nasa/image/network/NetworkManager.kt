@@ -1,9 +1,9 @@
-package com.nasa.mvvm.network
+package com.nasa.image.network
 
 import android.app.Activity
-import com.nasa.mvvm.dataModel.NasaResponse
-import com.nasa.mvvm.database.Nasa
-import com.nasa.image.utils.AppConstraint.Companion.API_KEY
+import com.nasa.image.dataModel.NasaResponse
+import com.nasa.image.database.Nasa
+import com.nasa.image.utils.AppConstraint
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -14,7 +14,7 @@ class NetworkManager(val applicationContext: Activity, val iAPICallback: IAPICal
         with(
             NetworkService,
         ) {
-            apiInterface.getApod(API_KEY, startDate, endDate)
+            apiInterface.getApod(AppConstraint.API_KEY, startDate, endDate)
                 .enqueue(
                     object : Callback<List<NasaResponse>> {
                         override fun onResponse(

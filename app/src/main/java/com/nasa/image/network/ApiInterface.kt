@@ -1,8 +1,8 @@
-package com.nasa.mvvm.network
+package com.nasa.image.network
 
+import com.nasa.image.dataModel.NasaResponse
 import com.nasa.image.utils.AppConstraint.Companion.BASE_URL
 import okhttp3.OkHttpClient
-import okhttp3.ResponseBody
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
 import retrofit2.Retrofit
@@ -16,7 +16,7 @@ interface ApiInterface {
     @GET("planetary/apod")
     fun getApod(@Query("api_key") apiKey: String,
                 @Query("start_date") startDate: String,
-                @Query("end_date") endDate: String) : ResponseBody
+                @Query("end_date") endDate: String) : Call<List<NasaResponse>>
 }
 
 object NetworkService{
