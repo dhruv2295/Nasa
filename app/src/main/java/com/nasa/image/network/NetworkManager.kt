@@ -22,15 +22,20 @@ class NetworkManager(val applicationContext: Activity, val iAPICallback: IAPICal
                             response: Response<List<NasaResponse>>
                         ) {
                             val list = mutableListOf<Nasa>()
-                            for (i in response.body()!!.indices) {
-                                list.add(Nasa(i, response.body()!![i].date,
-                                    response.body()!![i].explanation,
-                                    response.body()!![i].hdurl,
-                                    response.body()!![i].media_type,
-                                    response.body()!![i].service_version,
-                                    response.body()!![i].title,
-                                    response.body()!![i].url
-                                ))
+                            if (response.isSuccessful) {
+                                for (i in response.body()!!.indices) {
+                                    list.add(
+                                        Nasa(
+                                            i, response.body()!![i].date,
+                                            response.body()!![i].explanation,
+                                            response.body()!![i].hdurl,
+                                            response.body()!![i].media_type,
+                                            response.body()!![i].service_version,
+                                            response.body()!![i].title,
+                                            response.body()!![i].url
+                                        )
+                                    )
+                                }
                             }
                             iAPICallback.onSuccess(response.isSuccessful, list)
                         }

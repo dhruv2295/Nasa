@@ -71,6 +71,29 @@ class MainActivity : AppCompatActivity() {
             nasaListAdapter.updateList(l)
         }
 
+        binding.editEnd.setOnClickListener {
+            mainManager.showDateTimePicker(
+                binding.eDate,
+                binding.request
+            )
+        }
+
+        binding.editStart.setOnClickListener {
+            mainManager.showDateTimePicker(
+                binding.sDate,
+                binding.request
+            )
+        }
+
+        binding.request.setOnClickListener {
+            binding.request.isClickable = false
+            binding.progressBar.visibility = View.VISIBLE
+            networkManager.getImageOfTheDay(
+                startDate = binding.sDate.text.toString(),
+                endDate = binding.eDate.text.toString()
+            )
+        }
+
         binding.refresh.setOnRefreshListener {
             networkManager.getImageOfTheDay(
                 startDate = mainManager.getLastMonth(),
