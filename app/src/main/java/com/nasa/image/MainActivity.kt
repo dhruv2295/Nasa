@@ -29,6 +29,9 @@ class MainActivity : AppCompatActivity() {
         mainManager = MainManager(this)
         nasaListAdapter = NasaListAdapter(nasaList)
 
+        binding.sDate.text = mainManager.getLastMonth()
+        binding.eDate.text = mainManager.getToday()
+
         networkManager = NetworkManager(this, object: NetworkManager.IAPICallback{
             override fun onSuccess(isSuccess: Boolean, list: List<Nasa>) {
                 binding.progressBar.visibility = View.GONE
@@ -66,6 +69,13 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             nasaListAdapter.updateList(l)
+        }
+
+        binding.refresh.setOnRefreshListener {
+            networkManager.getImageOfTheDay(
+                startDate = mainManager.getLastMonth(),
+                endDate = mainManager.getToday()
+            )
         }
 
         networkManager.getImageOfTheDay(
