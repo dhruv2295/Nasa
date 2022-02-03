@@ -2,9 +2,10 @@ package com.nasa.image
 
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.method.ScrollingMovementMethod
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
@@ -24,6 +25,8 @@ class DetailActivity : AppCompatActivity() {
 
         binding.toolbar2.title = intent.getStringExtra("title")
         binding.description.text = intent.getStringExtra("description")
+        binding.description.movementMethod = ScrollingMovementMethod()
+
 
         Glide.with(this).load(intent.getStringExtra("imageUrl")).into(binding.actionImage)
 
