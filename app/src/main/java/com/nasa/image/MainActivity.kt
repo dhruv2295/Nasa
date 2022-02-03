@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nasa.image.ActivityFunctionManager.MainManager
 import com.nasa.image.adapter.NasaListAdapter
@@ -45,6 +46,7 @@ class MainActivity : AppCompatActivity() {
                 binding.request.isClickable = true
                 binding.progressBar.visibility = View.GONE
                 binding.request.visibility = View.GONE
+                binding.refresh.isRefreshing = false
                 Toast.makeText(applicationContext, "Something went wrong", Toast.LENGTH_SHORT).show()
             }
         })
@@ -53,6 +55,17 @@ class MainActivity : AppCompatActivity() {
             adapter = nasaListAdapter
             layoutManager =
                 LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
+        }
+
+        binding.search.doOnTextChanged { text, _, _, _ ->
+
+            val l = mutableListOf<Nasa>()
+            nasaList.map {
+                if (it.title!!.lowercase().contains(text.toString().lowercase())){
+                    l.add(it)
+                }
+            }
+            nasaListAdapter.updateList(l)
         }
 
         networkManager.getImageOfTheDay(
